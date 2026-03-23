@@ -1,0 +1,16 @@
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr
+    container_name: flaresolverr
+    environment:
+      - TZ=America/Toronto
+      - LOG_LEVEL=info
+    ports:
+      - 8191:8191
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

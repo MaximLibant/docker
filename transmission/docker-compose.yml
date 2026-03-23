@@ -1,0 +1,47 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${MULLVAD_WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${MULLVAD_WIREGUARD_ADDRESS}
+      - SERVER_CITIES=${MULLVAD_SERVER_CITY:-}
+    ports:
+      # Transmission web UI (exposed on gluetun because transmission uses its network)
+      - 9091:9091
+      # Transmission peer port
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - ./gluetun-data:/gluetun
+    networks:
+      - media
+    restart: unless-stopped
+
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=${TZ:-America/Toronto}
+    volumes:
+      - ./transmission-config:/config
+      - /mnt/media/library/downloads:/downloads
+      - /mnt/media/library/incomplete:/incomplete
+      - /mnt/media/library/completed:/completed
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

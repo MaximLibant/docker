@@ -1,0 +1,32 @@
+services:
+  tdarr:
+    image: ghcr.io/haveagitgat/tdarr
+    container_name: tdarr
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=America/Toronto
+      - UMASK_SET=002
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - nodeName=UnraidNode
+    ports:
+      - 8265:8265
+      - 8266:8266
+    volumes:
+      - ./tdarr-server:/app/server
+      - ./tdarr-config:/app/configs
+      - ./tdarr-logs:/app/logs
+      - /mnt/media/library/tvshows:/tvshows
+      - /mnt/media/library/movies:/movies
+      - /tmp/tdarr-transcode-cache:/temp
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

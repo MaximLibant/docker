@@ -1,0 +1,19 @@
+services:
+  prowlarr:
+    image: linuxserver/prowlarr
+    container_name: prowlarr
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=${TZ:-America/Toronto}
+    ports:
+      - 9696:9696
+    volumes:
+      - ./prowlarr-config:/config
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

@@ -1,0 +1,46 @@
+# https://recyclarr.dev/wiki/yaml/config-reference/
+# Run `docker exec recyclarr recyclarr sync` to apply profiles
+
+sonarr:
+  sonarr:
+    base_url: http://sonarr:8989
+    api_key: YOUR_SONARR_API_KEY
+
+    quality_definition:
+      type: series
+
+    quality_profiles:
+      - name: WEB-1080p
+        reset_unmatched_scores:
+          enabled: true
+
+    custom_formats:
+      - trash_ids:
+          # Unwanted
+          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
+          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+        assign_scores_to:
+          - name: WEB-1080p
+
+radarr:
+  radarr:
+    base_url: http://radarr:7878
+    api_key: YOUR_RADARR_API_KEY
+
+    quality_definition:
+      type: movie
+
+    quality_profiles:
+      - name: HD Bluray + WEB
+        reset_unmatched_scores:
+          enabled: true
+
+    custom_formats:
+      - trash_ids:
+          # Unwanted
+          - ed38b889b31be83fda192888e2286d83 # BR-DISK
+          - 90a6f9a284dff5103f6346090e6280c8 # LQ
+          - dc98083571e3c11597f10f281e382de2 # x265 (HD)
+        assign_scores_to:
+          - name: HD Bluray + WEB

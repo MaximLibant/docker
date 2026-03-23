@@ -1,0 +1,21 @@
+services:
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=${TZ:-America/Toronto}
+    ports:
+      - 6767:6767
+    volumes:
+      - ./bazarr-config:/config
+      - /mnt/media/library/tvshows:/tvshows
+      - /mnt/media/library/movies:/movies
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

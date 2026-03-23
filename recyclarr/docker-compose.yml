@@ -1,0 +1,15 @@
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    environment:
+      - TZ=America/Toronto
+    volumes:
+      - ./recyclarr-config:/config
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true

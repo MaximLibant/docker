@@ -1,0 +1,22 @@
+services:
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=${TZ:-America/Toronto}
+    ports:
+      - 7878:7878
+    volumes:
+      - ./radarr-config:/config
+      - /mnt/media/library/movies:/movies
+      - /mnt/media/library/downloads:/downloads
+      - /mnt/media/library/completed:/completed
+    networks:
+      - media
+    restart: unless-stopped
+
+networks:
+  media:
+    external: true
