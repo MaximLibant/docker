@@ -9,10 +9,13 @@ services:
     ports:
       - 9696:9696
     volumes:
-      - ./prowlarr-config:/config
+      - prowlarr-config:/config
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  prowlarr-config:
 
 networks:
   media:
