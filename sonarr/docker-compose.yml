@@ -13,6 +13,11 @@ services:
       - /mnt/media/library:/data
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.myhome.local`)"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.tls=true"
     restart: unless-stopped
 
 volumes:

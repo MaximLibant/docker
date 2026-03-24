@@ -13,6 +13,11 @@ services:
       - /mnt/media/library:/data
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.myhome.local`)"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.radarr.tls=true"
     restart: unless-stopped
 
 volumes:

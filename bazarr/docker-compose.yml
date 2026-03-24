@@ -13,6 +13,11 @@ services:
       - /mnt/media/library:/data
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.myhome.local`)"
+      - "traefik.http.routers.bazarr.entrypoints=websecure"
+      - "traefik.http.routers.bazarr.tls=true"
     restart: unless-stopped
 
 volumes:

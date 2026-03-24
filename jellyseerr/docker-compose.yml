@@ -10,6 +10,11 @@ services:
       - jellyseerr-config:/app/config
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.myhome.local`)"
+      - "traefik.http.routers.jellyseerr.entrypoints=websecure"
+      - "traefik.http.routers.jellyseerr.tls=true"
     restart: unless-stopped
 
 volumes:

@@ -23,6 +23,12 @@ services:
       - gluetun-data:/gluetun
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.transmission.rule=Host(`transmission.myhome.local`)"
+      - "traefik.http.routers.transmission.entrypoints=websecure"
+      - "traefik.http.routers.transmission.tls=true"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     restart: unless-stopped
 
   transmission:

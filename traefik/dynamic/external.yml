@@ -1,0 +1,26 @@
+http:
+  routers:
+    unraid:
+      rule: "Host(`unraid.myhome.local`)"
+      entrypoints:
+        - websecure
+      tls: {}
+      service: unraid
+
+    jellyfin:
+      rule: "Host(`jellyfin.myhome.local`)"
+      entrypoints:
+        - websecure
+      tls: {}
+      service: jellyfin
+
+  services:
+    unraid:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.25.5:8085"
+
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.25.5:8096"

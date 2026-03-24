@@ -12,6 +12,11 @@ services:
       - prowlarr-config:/config
     networks:
       - media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.myhome.local`)"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.tls=true"
     restart: unless-stopped
 
 volumes:

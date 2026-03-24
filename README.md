@@ -8,6 +8,7 @@ All services share an external `media` Docker network and use a single `/mnt/med
 
 | Service | Port | Description |
 |---------|------|-------------|
+| [Traefik](traefik/) | 80, 443 | Reverse proxy — HTTPS access via `*.myhome.local` |
 | [Sonarr](sonarr/) | 8989 | TV show management and automation |
 | [Radarr](radarr/) | 7878 | Movie management and automation |
 | [Prowlarr](prowlarr/) | 9696 | Indexer manager for Sonarr and Radarr |
@@ -22,22 +23,27 @@ All services share an external `media` Docker network and use a single `/mnt/med
 ## Architecture
 
 ```
-Prowlarr (indexers) --> Sonarr/Radarr (management)
-                              |
-                              v
-                    Gluetun (Mullvad VPN)
-                              |
-                              v
-                      Transmission (downloads)
-                              |
-                              v
-                        /mnt/media/library
-                              |
-                              v
-                    Bazarr (subtitles), Tdarr (transcoding)
+Browser (*.myhome.local)
+        |
+    Traefik (HTTPS reverse proxy)
+        |
+        +--> Prowlarr (indexers) --> Sonarr/Radarr (management)
+        |                                  |
+        |                                  v
+        |                        Gluetun (Mullvad VPN)
+        |                                  |
+        |                                  v
+        +--> Transmission (downloads) -----+
+        |                                  |
+        |                                  v
+        |                            /mnt/media/library
+        |                                  |
+        |                                  v
+        +--> Bazarr (subtitles), Tdarr (transcoding)
+        |
+        +--> Jellyseerr (request portal)
 
 Recyclarr --> syncs quality profiles to Sonarr/Radarr
-Jellyseerr --> request portal for Sonarr/Radarr
 FlareSolverr --> Cloudflare solving for Prowlarr
 ```
 
@@ -48,7 +54,8 @@ Each service has its own `docker-compose.yml`. Deploy each stack individually th
 ### Prerequisites
 
 1. Create the shared network: `docker network create media`
-2. Ensure `/mnt/media/library` exists on the host with the following subdirectories:
+2. Configure DNS: point `*.myhome.local` to the server's LAN IP (via NextDNS rewrites)
+3. Ensure `/mnt/media/library` exists on the host with the following subdirectories:
    - `movies/` — Movie library
    - `tvshows/` — TV show library
    - `downloads/` — Active downloads
@@ -57,13 +64,14 @@ Each service has its own `docker-compose.yml`. Deploy each stack individually th
 
 ### Deploy order
 
-1. **Gluetun/Transmission** — VPN + download client (requires Mullvad credentials)
-2. **Prowlarr** — Indexer manager
-3. **FlareSolverr** — Cloudflare solver (if needed by indexers)
-4. **Sonarr** and **Radarr** — Media managers
-5. **Recyclarr** — Quality profile sync
-6. **Bazarr** — Subtitles
-7. **Jellyseerr** — Request management
+1. **Traefik** — Reverse proxy (generate certs first, see [traefik/README](traefik/))
+2. **Gluetun/Transmission** — VPN + download client (requires Mullvad credentials)
+3. **Prowlarr** — Indexer manager
+4. **FlareSolverr** — Cloudflare solver (if needed by indexers)
+5. **Sonarr** and **Radarr** — Media managers
+6. **Recyclarr** — Quality profile sync
+7. **Bazarr** — Subtitles
+8. **Jellyseerr** — Request management
 
 ## Volume strategy
 
