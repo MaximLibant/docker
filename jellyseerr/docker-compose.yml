@@ -7,10 +7,13 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - ./jellyseerr-config:/app/config
+      - jellyseerr-config:/app/config
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  jellyseerr-config:
 
 networks:
   media:
