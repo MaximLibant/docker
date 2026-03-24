@@ -9,13 +9,14 @@ services:
     ports:
       - 8989:8989
     volumes:
-      - ./sonarr-config:/config
-      - /mnt/media/library/tvshows:/tvshows
-      - /mnt/media/library/downloads:/downloads
-      - /mnt/media/library/completed:/completed
+      - sonarr-config:/config
+      - /mnt/media/library:/data
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  sonarr-config:
 
 networks:
   media:
