@@ -12,6 +12,7 @@ services:
       - WIREGUARD_PRIVATE_KEY=${MULLVAD_WIREGUARD_PRIVATE_KEY}
       - WIREGUARD_ADDRESSES=${MULLVAD_WIREGUARD_ADDRESS}
       - SERVER_CITIES=${MULLVAD_SERVER_CITY:-}
+      - DNS_ADDRESS=1.1.1.1
     ports:
       # Transmission web UI (exposed on gluetun because transmission uses its network)
       - 9091:9091
@@ -19,7 +20,7 @@ services:
       - 51413:51413
       - 51413:51413/udp
     volumes:
-      - ./gluetun-data:/gluetun
+      - gluetun-data:/gluetun
     networks:
       - media
     restart: unless-stopped
@@ -36,11 +37,13 @@ services:
       - PGID=100
       - TZ=${TZ:-America/Toronto}
     volumes:
-      - ./transmission-config:/config
-      - /mnt/media/library/downloads:/downloads
-      - /mnt/media/library/incomplete:/incomplete
-      - /mnt/media/library/completed:/completed
+      - transmission-config:/config
+      - /mnt/media/library:/data
     restart: unless-stopped
+
+volumes:
+  gluetun-data:
+  transmission-config:
 
 networks:
   media:
