@@ -17,15 +17,19 @@ services:
       - 8265:8265
       - 8266:8266
     volumes:
-      - ./tdarr-server:/app/server
-      - ./tdarr-config:/app/configs
-      - ./tdarr-logs:/app/logs
-      - /mnt/media/library/tvshows:/tvshows
-      - /mnt/media/library/movies:/movies
+      - tdarr-server:/app/server
+      - tdarr-config:/app/configs
+      - tdarr-logs:/app/logs
+      - /mnt/media/library:/data
       - /tmp/tdarr-transcode-cache:/temp
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  tdarr-server:
+  tdarr-config:
+  tdarr-logs:
 
 networks:
   media:
