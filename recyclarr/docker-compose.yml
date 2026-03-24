@@ -5,10 +5,13 @@ services:
     environment:
       - TZ=America/Toronto
     volumes:
-      - ./recyclarr-config:/config
+      - recyclarr-config:/config
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  recyclarr-config:
 
 networks:
   media:
