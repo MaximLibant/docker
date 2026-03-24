@@ -9,12 +9,14 @@ services:
     ports:
       - 6767:6767
     volumes:
-      - ./bazarr-config:/config
-      - /mnt/media/library/tvshows:/tvshows
-      - /mnt/media/library/movies:/movies
+      - bazarr-config:/config
+      - /mnt/media/library:/data
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  bazarr-config:
 
 networks:
   media:
