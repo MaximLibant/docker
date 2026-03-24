@@ -3,19 +3,20 @@ services:
     image: linuxserver/radarr
     container_name: radarr
     environment:
-      - PUID=99
+      - PUID=100
       - PGID=100
       - TZ=${TZ:-America/Toronto}
     ports:
       - 7878:7878
     volumes:
-      - ./radarr-config:/config
-      - /mnt/media/library/movies:/movies
-      - /mnt/media/library/downloads:/downloads
-      - /mnt/media/library/completed:/completed
+      - radarr-config:/config
+      - /mnt/media/library:/data
     networks:
       - media
     restart: unless-stopped
+
+volumes:
+  radarr-config:
 
 networks:
   media:
