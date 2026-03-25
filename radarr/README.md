@@ -17,11 +17,14 @@ Open `http://<host-ip>:7878` and complete the initial setup (create a username a
 Go to Settings > Media Management:
 
 1. **Enable Rename Movies** and **Replace Illegal Characters**
-2. Set the naming format:
-   - Standard Movie Format: `{Movie Title} ({Release Year}) {Quality Full}`
-     - Example: `The Movie Title (2010) Bluray-1080p Proper`
-   - Movie Folder Format: `{Movie Title} ({Release Year})`
-     - Example: `The Movie Title (2010)`
+2. Set the naming format (based on [TRaSH Guides](https://trash-guides.info/Radarr/Radarr-recommended-naming-scheme/)):
+   - Standard Movie Format:
+     ```
+     {Movie CleanTitle} {(Release Year)} {imdb-{ImdbId}} {edition-{Edition Tags}} {[Custom Formats]}{[Quality Full]}{[MediaInfo 3D]}{[MediaInfo VideoDynamicRangeType]}{[Mediainfo AudioCodec}{ Mediainfo AudioChannels]}{[Mediainfo VideoCodec]}{-Release Group}
+     ```
+     - Example: `The Movie Title (2010) {imdb-tt1234567} [Bluray-1080p][HDR][DTS-HD MA 5.1][x264]-GROUP`
+   - Movie Folder Format: `{Movie CleanTitle} ({Release Year}) [imdbid-{ImdbId}]`
+     - Example: `The Movie Title (2010) [imdbid-tt1234567]`
    - Colon Replacement: **Smart Replace**
 3. Under **Root Folders**, add `/data/movies`
 
@@ -40,7 +43,6 @@ Go to Settings > General — your API key is listed there. You'll need this for 
 
 Quality profiles are managed by Recyclarr. See the [Recyclarr README](../recyclarr/README.md) for details. Available profiles:
 
-- **720p** — 720p only (Bluray > WEBDL > WEBRip)
 - **1080p** — 1080p only (Bluray > WEBDL > WEBRip)
 - **2160p** — 2160p only (Bluray > WEBDL > WEBRip)
 - **Best up to 1080p** — 720p-1080p, upgrades toward Bluray-1080p

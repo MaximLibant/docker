@@ -17,9 +17,20 @@ Open `http://<host-ip>:8989` and complete the initial setup (create a username a
 Go to Settings > Media Management:
 
 1. **Enable Rename Episodes** and **Replace Illegal Characters**
-2. Set the naming format:
-   - Standard Episode Format: `{Series TitleYear} - S{season:00}E{episode:00} - {Episode CleanTitle} [{Quality Full}]`
-     - Example: `The Series (2020) - S01E01 - Episode Title [WEBDL-1080p]`
+2. Set the naming format (based on [TRaSH Guides](https://trash-guides.info/Sonarr/Sonarr-recommended-naming-scheme/)):
+   - Standard Episode Format:
+     ```
+     {Series TitleYear} - S{season:00}E{episode:00} - {Episode CleanTitle} [{Custom Formats }{Quality Full}]{[MediaInfo VideoDynamicRangeType]}{[Mediainfo AudioCodec}{ Mediainfo AudioChannels]}{[MediaInfo VideoCodec]}{-Release Group}
+     ```
+     - Example: `The Series (2020) - S01E01 - Episode Title [WEBDL-1080p][HDR][AAC 2.0][x264]-GROUP`
+   - Daily Episode Format:
+     ```
+     {Series TitleYear} - {Air-Date} - {Episode CleanTitle} [{Custom Formats }{Quality Full}]{[MediaInfo VideoDynamicRangeType]}{[Mediainfo AudioCodec}{ Mediainfo AudioChannels]}{[MediaInfo VideoCodec]}{-Release Group}
+     ```
+   - Anime Episode Format:
+     ```
+     {Series TitleYear} - S{season:00}E{episode:00} - {Episode CleanTitle} [{Custom Formats }{Quality Full}]{[MediaInfo VideoDynamicRangeType]}{[Mediainfo AudioCodec}{ Mediainfo AudioChannels]}{[MediaInfo VideoCodec]}{-Release Group}
+     ```
    - Season Folder Format: `Season {season:00}`
    - Series Folder Format: `{Series TitleYear}`
    - Specials Folder Format: `Specials`
@@ -40,11 +51,10 @@ Go to Settings > General — your API key is listed there. You'll need this for 
 
 Quality profiles are managed by Recyclarr. See the [Recyclarr README](../recyclarr/README.md) for details. Available profiles:
 
-- **720p** — 720p only (Bluray > WEBDL > WEBRip)
-- **1080p** — 1080p only (Bluray > WEBDL > WEBRip)
-- **2160p** — 2160p only (Bluray > WEBDL > WEBRip)
-- **Best up to 1080p** — 720p-1080p, upgrades toward Bluray-1080p
-- **Best up to 2160p** — 720p-2160p, upgrades toward Bluray-2160p
+- **1080p** — 1080p WEB only (WEBDL > WEBRip)
+- **2160p** — 2160p WEB only (WEBDL > WEBRip)
+- **Best up to 1080p** — 720p-1080p WEB (WEBDL > WEBRip)
+- **Best up to 2160p** — 720p-2160p WEB (WEBDL > WEBRip)
 
 ## Volume mounts
 
