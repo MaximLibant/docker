@@ -3,7 +3,7 @@ services:
     image: linuxserver/radarr
     container_name: radarr
     environment:
-      - PUID=100
+      - PUID=99
       - PGID=100
       - TZ=${TZ:-America/Toronto}
     ports:
