@@ -4,6 +4,8 @@ services:
     container_name: recyclarr
     environment:
       - TZ=America/Toronto
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - RADARR_API_KEY=${RADARR_API_KEY}
     volumes:
       - recyclarr-config:/config
     networks:
