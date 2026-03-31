@@ -154,10 +154,32 @@ sonarr:
           - name: Best up to 1080p
           - name: Best up to 2160p
 
+      # Season Pack - prefer season packs over single episodes
+      - trash_ids:
+          - 3bc5f395426614e155e585a2f056cdf1 # Season Pack
+        assign_scores_to:
+          - name: 1080p
+          - name: 2160p
+          - name: Best up to 1080p
+          - name: Best up to 2160p
+
+      # Optional Unwanted - applied to all profiles
+      - trash_ids:
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+          - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
+          - 06d66ab109d4d2eddb2794d21526d140 # Retags
+        assign_scores_to:
+          - name: 1080p
+          - name: 2160p
+          - name: Best up to 1080p
+          - name: Best up to 2160p
+
       # HDR Formats - 2160p profiles only
       - trash_ids:
           - 505d871304820ba7106b693be6fe4a9e # HDR
           - 7c3a61a9c6cb04f52f1544be6d44a026 # DV Boost
+          - 0c4b99df9206d2cfac3c05ab897dd62a # HDR10+ Boost
         assign_scores_to:
           - name: 2160p
           - name: Best up to 2160p
@@ -169,9 +191,16 @@ sonarr:
           - name: 2160p
           - name: Best up to 2160p
 
-      # SDR block - 2160p profiles only
+      # x265 (no HDR/DV) block - 2160p profiles only
       - trash_ids:
-          - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
+          - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: 2160p
+          - name: Best up to 2160p
+
+      # SDR block - 2160p profiles only (allows SDR WEB-DL as fallback)
+      - trash_ids:
+          - 83304f261cf516bb208c18c54c0adf97 # SDR (no WEBDL)
         assign_scores_to:
           - name: 2160p
           - name: Best up to 2160p
@@ -354,9 +383,38 @@ radarr:
           - name: Best up to 1080p
           - name: Best up to 2160p
 
+      # Movie Versions - applied to all profiles
+      - trash_ids:
+          - eecf3a857724171f968a66cb5719e152 # IMAX
+          - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
+          - 957d0f44b592285f26449575e8b1167e # Special Edition
+          - 570bc9ebecd92723d2d21500f4be314c # Remaster
+          - eca37840c13c6ef2dd0262b141a5482f # 4K Remaster
+          - e0c07d59beb37348e975a930d5e50319 # Criterion Collection
+          - 9d27d9d2181838f76dee150882bdc58c # Masters of Cinema
+          - db9b4c4b53d312a3ca5f1378f6440fc9 # Vinegar Syndrome
+        assign_scores_to:
+          - name: 1080p
+          - name: 2160p
+          - name: Best up to 1080p
+          - name: Best up to 2160p
+
+      # Optional Unwanted - applied to all profiles
+      - trash_ids:
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
+          - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
+          - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
+        assign_scores_to:
+          - name: 1080p
+          - name: 2160p
+          - name: Best up to 1080p
+          - name: Best up to 2160p
+
       # HDR Formats - 2160p profiles only
       - trash_ids:
           - 493b6d1dbec3c3364c59d7607f7e3405 # HDR
+          - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
         assign_scores_to:
           - name: 2160p
           - name: Best up to 2160p
@@ -375,9 +433,16 @@ radarr:
           - name: 2160p
           - name: Best up to 2160p
 
-      # SDR block - 2160p profiles only
+      # x265 (no HDR/DV) block - 2160p profiles only
       - trash_ids:
-          - 9c38ebb7384dada637be8899efa68e6f # SDR
+          - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: 2160p
+          - name: Best up to 2160p
+
+      # SDR block - 2160p profiles only (allows SDR WEB-DL as fallback)
+      - trash_ids:
+          - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
         assign_scores_to:
           - name: 2160p
           - name: Best up to 2160p
